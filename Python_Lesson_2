@@ -119,23 +119,15 @@ while i <= number_of_goods:
     data = dict(Название=name_good, Цена=price_good, Количество=amount_good, Единица_измерения=unit_good)
     good = (i, data)
     print(good)
-    i += 1
-    if name_good in names:
-        continue
-    else:
+    if name_good not in names:
         names.append(name_good)
-    if price_good in prices:
-        continue
-    else:
+    if price_good not in prices:
         prices.append(price_good)
-    if amount_good in amounts:
-        continue
-    else:
+    if amount_good not in amounts:
         amounts.append(amount_good)
-    if unit_good in units:
-        continue
-    else:
+    if unit_good not in units:
         units.append(unit_good)
+    i += 1
 analytics = dict(Название=names, Цена=prices, Количество=amounts, Единица_измерения=units)
 print(analytics)
 
