@@ -1,15 +1,5 @@
 1. Реализовать функцию, принимающую два числа (позиционные аргументы) и выполняющую их деление. Числа запрашивать у пользователя, предусмотреть обработку ситуации деления на ноль.
 
-def quotient():
-    dividend = float(input("Введите делимое ..."))
-    divisor = float(input("Введите делитель ..."))
-    if divisor != 0:
-        return dividend / divisor
-    else:
-        print(f"Undefined: деление на ноль невозможно.")
-        divisor = float(input("Введите другой делитель ..."))
-        return dividend / divisor
-
 
 print(f"Результат деления = {quotient()}")
 
