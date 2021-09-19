@@ -1,0 +1,220 @@
+1. Создать программно файл в текстовом формате, записать в него построчно данные, вводимые пользователем. Об окончании ввода данных свидетельствует пустая строка.
+
+
+
+with open('my_file.txt', 'a+') as f:
+    while True:
+        user_input = input('Введите значение   \n')
+        f.write(user_input + '\n')
+        if user_input == "":
+            break
+with open('my_file.txt', 'r') as file:
+    print(file.read())
+
+
+
+2. Создать текстовый файл (не программно), сохранить в нем несколько строк, выполнить подсчет количества строк, количества слов в каждой строке.
+with open('file_ex2.txt', 'r') as f:
+    print(f"Количество строк в файле:  ", sum(1 for _ in f))
+
+
+
+
+with open('file_ex2.txt', 'r') as f:
+    lines = f.readlines()
+    for idx, word in enumerate(lines):
+        number_of_words = len(word.split())
+        print(f"В строке номер ", idx + 1, " всего ", number_of_words, " слов")
+
+
+
+
+3. Создать текстовый файл (не программно), построчно записать фамилии сотрудников и величину их окладов (не менее 10 строк). Определить, кто из сотрудников имеет оклад менее 20 тыс., вывести фамилии этих сотрудников. Выполнить подсчет средней величины дохода сотрудников.
+Пример файла:
+Иванов 23543.12
+Петров 13749.32
+
+
+
+
+with open("file_ex3.txt", 'r', encoding='utf-8') as file:
+    lines = file.readlines()
+    total_wedges = 0
+    print(f"Сотрудники с зарплатой меньше 20000:")
+
+    for idx,line in enumerate(lines):
+        word_list = line.split()
+        surname = ''
+        
+        for word in word_list:
+            if word.isalpha():
+                surname = word
+            if word.isnumeric():
+                salary = float(word)
+                total_wedges = total_wedges + salary
+                staff = 1 + idx
+                if salary < 20000:
+                     print(surname,'   ',salary)
+print(f"Средняя зарплата сотрудников   ", round((total_wedges / staff),2))
+
+
+
+
+
+4. Создать (не программно) текстовый файл со следующим содержимым:
+One — 1
+Two — 2
+Three — 3
+Four — 4
+Необходимо написать программу, открывающую файл на чтение и считывающую построчно данные. При этом английские числительные должны заменяться на русские. Новый блок строк должен записываться в новый текстовый файл.
+
+
+
+
+with open("file_ex4.txt", 'r', encoding='utf-8') as f:
+    for idx, line in enumerate(f):
+        word_list = line.split()
+        new_line = ''
+
+        for word in word_list:
+            if word.isalpha():
+                if word == 'One':
+                    x = 'Один'
+                if word == 'Two':
+                    x = 'Два'
+                if word == 'Three':
+                    x = 'Три'
+                if word == 'Four':
+                    x = 'Четыре'
+                new_line = new_line + x
+            else:
+                new_line = new_line + " " + word
+
+        with open("new_file_ex4.txt", 'a+', encoding='utf-8') as n:
+            n.write(new_line + '\n')
+
+
+
+
+5. Создать (программно) текстовый файл, записать в него программно набор чисел, разделенных пробелами. Программа должна подсчитывать сумму чисел в файле и выводить ее на экран.
+
+
+
+
+with open('file_ex5.txt', 'a+') as f:
+    sum = 0
+    user_input = input('Введите числа через пробел:   ')
+    f.write(user_input)
+
+with open('file_ex5.txt', 'r') as f:
+    line = f.read()
+    num = line.split()
+    
+    for x in num:
+        sum = sum + int(x)
+
+print(f'Сумма введённых чисел равна  ', sum)
+
+
+
+
+
+6. Необходимо создать (не программно) текстовый файл, где каждая строка описывает учебный предмет и наличие лекционных, практических и лабораторных занятий по этому предмету и их количество. Важно, чтобы для каждого предмета не обязательно были все типы занятий. Сформировать словарь, содержащий название предмета и общее количество занятий по нему. Вывести словарь на экран.
+Примеры строк файла: Информатика: 100(л) 50(пр) 20(лаб).
+Физика: 30(л) — 10(лаб)
+Физкультура: — 30(пр) —
+Пример словаря: {“Информатика”: 170, “Физика”: 40, “Физкультура”: 30}
+
+
+
+
+dict = {}
+
+subs = []
+hours = []
+with open("file_ex6.txt", 'r', encoding='utf-8') as f:
+
+    for line in f:
+
+        (subject, l_hours, p_hours, lab_hours) = line.split()
+        subject = subject[:(len(subject) - 1)]
+        subs.append(subject)
+
+        a, b, c = '0', '0', '0'
+
+        for x in l_hours:
+            if x.isnumeric():
+                a = a + x
+            else:
+                break
+
+        for y in p_hours:
+            if y.isnumeric():
+                b = b + y
+            else:
+                break
+ 
+        for z in lab_hours:
+            if z.isnumeric():
+                c = c + z
+            else:
+                break
+       
+        i = int(a) + int(b) + int(c)
+        hours.append(i)
+
+dict = {k: v for k, v in zip(subs, hours)}
+
+print(f'Список предметов:  ', subs)
+print(f'Количество часов по каждому предмету:  ',hours)
+print(dict)
+
+
+
+
+7. Создать вручную и заполнить несколькими строками текстовый файл, в котором каждая строка должна содержать данные о фирме: название, форма собственности, выручка, издержки.
+Пример строки файла: firm_1 ООО 10000 5000.
+Необходимо построчно прочитать файл, вычислить прибыль каждой компании, а также среднюю прибыль. Если фирма получила убытки, в расчет средней прибыли ее не включать.
+Далее реализовать список. Он должен содержать словарь с фирмами и их прибылями, а также словарь со средней прибылью. Если фирма получила убытки, также добавить ее в словарь (со значением убытков).
+Пример списка: [{“firm_1”: 5000, “firm_2”: 3000, “firm_3”: 1000}, {“average_profit”: 2000}].
+Итоговый список сохранить в виде json-объекта в соответствующий файл.
+Пример json-объекта:
+
+[{"firm_1": 5000, "firm_2": 3000, "firm_3": 1000}, {"average_profit": 2000}]
+Подсказка: использовать менеджер контекста.
+
+with open("file_ex7.txt", 'r', encoding='utf-8') as f:
+    i = 0
+    average_profit = 0
+    s_profit = 0
+    firms, profits = [], []
+    for line in f:
+
+        (name, form, revenue, expenses) = line.split()
+        firms.append(name)
+        profit = int(revenue) - int(expenses)
+        profits.append(profit)
+
+        if profit > 0:
+            i += 1
+            s_profit += profit
+            average_profit = s_profit / i
+
+    average_profit = round(average_profit,2)
+   
+    dict_1 = {k: v for k, v in zip(firms, profits)}
+    dict_2 = dict.fromkeys(['average_profit'], average_profit)
+    print(f'Словарь фирм и их прибылей ', dict_1)
+    print(f'Словарь средней прибыли ', dict_2)
+    list = [dict_1, dict_2]
+    print(f'Список словарей: ', list)
+
+    import json
+
+    with open('my_file.json', 'w') as write_f:
+        json.dump(list, write_f)
+        json_list = json.dumps(list)
+        print(json_list)
+
+
+
